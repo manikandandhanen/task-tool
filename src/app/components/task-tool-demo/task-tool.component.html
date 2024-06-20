@@ -1,0 +1,108 @@
+<mat-toolbar color="primary">
+  <span>Task Management Tool</span>
+</mat-toolbar>
+
+<div class="container">
+  <div class="task-row-container">
+    <div class="task-input">
+      <mat-form-field appearance="fill">
+        <mat-label>New Task</mat-label>
+        <input matInput [(ngModel)]="newTask" placeholder="Enter a task" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addTask()">
+        Add Task
+      </button>
+    </div>
+
+    <div class="task-search">
+      <mat-form-field class="search-field" appearance="fill">
+        <mat-label>Search Tasks</mat-label>
+        <input
+          matInput
+          [(ngModel)]="searchQuery"
+          placeholder="Search for tasks"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="task-container">
+    <h2>To do</h2>
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="tasks['todo']"
+      [cdkDropListConnectedTo]="[inProgressList, completedList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-card
+        *ngFor="let item of getFilteredTasks('todo')"
+        cdkDrag
+        [ngClass]="'to-do'"
+        class="task-box"
+      >
+        {{ item.description }}
+        <button mat-icon-button color="warn" (click)="deleteTask(item, 'todo')">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="task-container">
+    <h2>In Progress</h2>
+    <div
+      cdkDropList
+      #inProgressList="cdkDropList"
+      [cdkDropListData]="tasks['inProgress']"
+      [cdkDropListConnectedTo]="[todoList, completedList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-card
+        *ngFor="let item of getFilteredTasks('inProgress')"
+        class="task-box"
+        cdkDrag
+        [ngClass]="'in-progress'"
+      >
+        {{ item.description }}
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteTask(item, 'inProgress')"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="task-container">
+    <h2>Completed</h2>
+    <div
+      cdkDropList
+      #completedList="cdkDropList"
+      [cdkDropListData]="tasks['completed']"
+      [cdkDropListConnectedTo]="[todoList, inProgressList]"
+      class="task-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-card
+        *ngFor="let item of getFilteredTasks('completed')"
+        class="task-box"
+        cdkDrag
+        [ngClass]="'completed'"
+      >
+        {{ item.description }}
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteTask(item, 'completed')"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+</div>
