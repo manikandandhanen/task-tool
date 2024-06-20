@@ -8,10 +8,9 @@ describe('TaskToolComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskToolComponent]
-    })
-    .compileComponents();
-    
+      imports: [TaskToolComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TaskToolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

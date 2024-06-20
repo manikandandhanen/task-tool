@@ -20,7 +20,7 @@ interface Task {
 }
 
 @Component({
-  selector: 'task-tool-demo',
+  selector: 'task-tool',
   standalone: true,
   imports: [
     CdkDropList,
@@ -34,10 +34,10 @@ interface Task {
     MatCardModule,
     FormsModule,
   ],
-  templateUrl: './task-tool-demo.component.html',
-  styleUrl: './task-tool-demo.component.scss',
+  templateUrl: './task-tool.component.html',
+  styleUrl: './task-tool.component.scss',
 })
-export class TaskToolDemoComponent {
+export class TaskToolComponent {
   newTask: string = '';
   searchQuery: string = '';
 
