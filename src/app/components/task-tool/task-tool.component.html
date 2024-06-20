@@ -1,0 +1,73 @@
+<mat-toolbar color="primary">
+  <span>Task Management Tool</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-form-field class="search-field" appearance="fill">
+    <mat-label>Search Tasks</mat-label>
+    <input matInput [(ngModel)]="searchQuery" placeholder="Search for tasks" />
+  </mat-form-field>
+
+  <mat-card class="task-input-card">
+    <mat-form-field appearance="fill">
+      <mat-label>New Task</mat-label>
+      <input matInput [(ngModel)]="newTask" placeholder="Enter a task" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addTask()">
+      Add Task
+    </button>
+  </mat-card>
+
+  <div class="task-columns">
+    <div class="task-column">
+      <h3>To-Do</h3>
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="tasks['todo']"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list"
+        [cdkDropListConnectedTo]="['inProgressList', 'completedList']"
+      ></div>
+    </div>
+
+    <div class="task-column">
+      <h3>In-Progress</h3>
+      <div
+        cdkDropList
+        #inProgressList="cdkDropList"
+        [cdkDropListData]="tasks['inProgress']"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list"
+        [cdkDropListConnectedTo]="['todoList', 'completedList']"
+      ></div>
+    </div>
+
+    <div class="task-column">
+      <h3>Completed</h3>
+      <div
+        cdkDropList
+        #completedList="cdkDropList"
+        [cdkDropListData]="tasks['completed']"
+        (cdkDropListDropped)="drop($event)"
+        class="task-list"
+        [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
+      >
+        <mat-card
+          *ngFor="let task of getFilteredTasks('completed')"
+          cdkDrag
+          [ngClass]="'completed'"
+        >
+          {{ task.name }}
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteTask(task, 'completed')"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
