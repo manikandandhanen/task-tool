@@ -44,11 +44,10 @@ export class TaskToolComponent {
   tasks: { [key: string]: Task[] } = {
     todo: [
       { description: 'Get to work' },
-      { description: 'Pick up groceries' },
       { description: 'Go home' },
       { description: 'Fall asleep' },
     ],
-    inProgress: [],
+    inProgress: [{ description: 'Pick up groceries' }],
     completed: [
       { description: 'Get up' },
       { description: 'Brush teeth' },
